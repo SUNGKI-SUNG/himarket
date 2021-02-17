@@ -176,6 +176,7 @@ public class PolicyHandler{
 ![statusupdate](https://user-images.githubusercontent.com/77369319/108150019-4aea7d00-7117-11eb-9374-416ac6b794ba.png)
 
 <Kafka Event 발생>
+
 ![kafka](https://user-images.githubusercontent.com/77369319/108151148-65255a80-7119-11eb-8381-576b50b6a45d.png)
 
 # GateWay 적용
