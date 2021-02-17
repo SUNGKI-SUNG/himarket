@@ -16,6 +16,8 @@
 # Event Storming 결과
 ![EventStorming](https://user-images.githubusercontent.com/77369319/108143073-597e6780-710a-11eb-9cae-6f2c170848ab.png)
 
+# 헥사고날 아키텍처 다이어그램 도출
+![헥사고날](https://user-images.githubusercontent.com/77369319/108262114-d57abd00-71a7-11eb-8fec-467b0c8d1821.png)
 
 # 구현
 분석/설계 단계에서 도출된 헥사고날 아키텍처에 따라, 구현한 각 서비스를 로컬(msaez.io 개인랩)에서 실행하는 방법은 아래와 같다 
