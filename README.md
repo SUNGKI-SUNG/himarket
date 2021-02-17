@@ -247,6 +247,7 @@ spring:
 server:
   port: 8080
 ```
+![gatewayorder](https://user-images.githubusercontent.com/77369319/108150643-58543700-7118-11eb-806d-754def74ab95.png)
 
 # CQRS
 Materialized View 를 구현하여, 타 마이크로서비스의 데이터 원본에 접근없이(Composite 서비스나 조인SQL 등 없이) 도 내 서비스의 화면 구성과 잦은 조회가 가능하게 구현해 두었다.
