@@ -315,3 +315,17 @@ Transfer-Encoding: chunked
     }
 }
 ```
+
+# 폴리그랏
+-delivery 서비스의 DB와 Order 서비스의 DB를 다른 DB를 사용하여 폴리글랏을 만족시키고 있다.
+```
+delivery pom.xml DB 설정코드
+<dependency>
+<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<scope>runtime</scope>
+</dependency>   
+
+order pom.xml DB 설정코드 
+
+```
