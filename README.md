@@ -455,4 +455,4 @@ spec:
 ```	  
 - deploy 완료
 
-https://user-images.githubusercontent.com/77369319/108266121-0f9a8d80-71ad-11eb-9cc7-5a2cde6a43d7.png
+![deploy](https://user-images.githubusercontent.com/77369319/108266121-0f9a8d80-71ad-11eb-9cc7-5a2cde6a43d7.png)
