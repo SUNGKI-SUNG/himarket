@@ -165,9 +165,13 @@ public class PolicyHandler{
 }
 ```
 
-- DDD 적용 후 REST API의 테스트 통하여 정상적으로 동작하는 것을 확인할 수 있었다.
-- 전자제품 주문(order 동작 후 결과)
+- DDD 적용 후 REST API의 테스트 통하여 정상적으로 동작하는 것을 확인할 수 있었다. 
+
+- 주문(order)
 ![order](https://user-images.githubusercontent.com/77369319/108148522-4ff9fd00-7114-11eb-9f94-3c726de9532d.png)
+
+- 주문 후 delivery 전송 결과
+![statusupdate](https://user-images.githubusercontent.com/77369319/108150019-4aea7d00-7117-11eb-9374-416ac6b794ba.png)
 
 # GateWay 적용
 API GateWay를 통하여 마이크로 서비스들의 진입점을 통일할 수 있다. 다음과 같이 GateWay를 적용하였다.
