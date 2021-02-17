@@ -248,6 +248,7 @@ server:
   port: 8080
 ```
 <GateWay를 통한 주문>
+
 ![gatewayorder](https://user-images.githubusercontent.com/77369319/108150643-58543700-7118-11eb-806d-754def74ab95.png)
 
 # CQRS
