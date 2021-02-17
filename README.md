@@ -166,3 +166,80 @@ public class PolicyHandler{
 
 - DDD 적용 후 REST API의 테스트 통하여 정상적으로 동작하는 것을 확인할 수 있었다.
 - 전자제품 주문(order 동작 후 결과)
+![order](https://user-images.githubusercontent.com/77369319/108148522-4ff9fd00-7114-11eb-9f94-3c726de9532d.png)
+
+# GateWay 적용
+API GateWay를 통하여 마이크로 서비스들의 진입점을 통일할 수 있다. 다음과 같이 GateWay를 적용하였다.
+
+**himarket 서비스의 Gateway - Application.yml**
+```
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+      routes:
+        - id: order
+          uri: http://localhost:8081
+          predicates:
+            - Path=/orders/** 
+        - id: delivery
+          uri: http://localhost:8082
+          predicates:
+            - Path=/deliveries/**,/cancellations/** 
+        - id: customercenter
+          uri: http://localhost:8083
+          predicates:
+            - Path= /mypages/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: order
+          uri: http://order:8080
+          predicates:
+            - Path=/orders/** 
+        - id: delivery
+          uri: http://delivery:8080
+          predicates:
+            - Path=/deliveries/**,/cancellations/** 
+        - id: customercenter
+          uri: http://customercenter:8080
+          predicates:
+            - Path= /mypages/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
+```
+
+# CQRS
+Materialized View 를 구현하여, 타 마이크로서비스의 데이터 원본에 접근없이(Composite 서비스나 조인SQL 등 없이) 도 내 서비스의 화면 구성과 잦은 조회가 가능하게 구현해 두었다.
