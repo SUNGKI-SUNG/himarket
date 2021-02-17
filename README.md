@@ -417,8 +417,7 @@ cd ..
 cd order
 az acr build --registry skuser04 --image skuser04.azurecr.io/order:v1 .
 ```
-![증빙7](https://user-images.githubusercontent.com/77368578/107920373-35a70e80-6fb0-11eb-8024-a6fc42fea93f.png)
-
+![deploy](https://user-images.githubusercontent.com/77369319/108266199-280aa800-71ad-11eb-905c-6701f6ab2009.png)
 ```
 kubectl expose deploy order --type=ClusterIP --port=8080 -n tutorial
 ```
