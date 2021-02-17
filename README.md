@@ -455,4 +455,4 @@ spec:
 ```	  
 - deploy 완료
 
-![전체 MSA](https://user-images.githubusercontent.com/77368578/108006011-992b4d80-703d-11eb-8df9-a2cea19aa693.png)
+https://user-images.githubusercontent.com/77369319/108266121-0f9a8d80-71ad-11eb-9cc7-5a2cde6a43d7.png
