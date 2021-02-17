@@ -175,6 +175,9 @@ public class PolicyHandler{
 
 ![statusupdate](https://user-images.githubusercontent.com/77369319/108150019-4aea7d00-7117-11eb-9374-416ac6b794ba.png)
 
+<Kafka Event 발생>
+![kafka](https://user-images.githubusercontent.com/77369319/108151148-65255a80-7119-11eb-8381-576b50b6a45d.png)
+
 # GateWay 적용
 API GateWay를 통하여 마이크로 서비스들의 진입점을 통일할 수 있다. 다음과 같이 GateWay를 적용하였다.
 
