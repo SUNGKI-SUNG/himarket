@@ -15,3 +15,21 @@
 
 # Event Storming 결과
 ![EventStorming](https://user-images.githubusercontent.com/77369319/108143073-597e6780-710a-11eb-9cae-6f2c170848ab.png)
+
+
+# 구현
+분석/설계 단계에서 도출된 헥사고날 아키텍처에 따라, 구현한 각 서비스를 로컬(msaez.io 개인랩)에서 실행하는 방법은 아래와 같다 
+(각자의 포트넘버는 8081[order], 8082[delivery], 8083[customercenter], 8088[gateway] 이다)
+```
+cd Order
+mvn spring-boot:run  
+
+cd dilivery
+mvn spring-boot:run
+
+cd customercenter
+mvn spring-boot:run 
+
+cd gateway
+mvn spring-boot:run  
+```
