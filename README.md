@@ -33,6 +33,7 @@ mvn spring-boot:run
 cd gateway
 mvn spring-boot:run  
 ```
+![portcheck](https://user-images.githubusercontent.com/77369319/108149626-9ea89680-7116-11eb-9c04-2c42949be3d9.png)
 
 ## DDD 의 적용
 msaez.io 를 통해 구현한 Aggregate 단위로 Entity 를 선언 후, 구현을 진행하였다.
