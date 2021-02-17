@@ -33,3 +33,136 @@ mvn spring-boot:run
 cd gateway
 mvn spring-boot:run  
 ```
+
+## DDD 의 적용
+msaez.io 를 통해 구현한 Aggregate 단위로 Entity 를 선언 후, 구현을 진행하였다.
+Entity Pattern 과 Repository Pattern 을 적용하기 위해 Spring Data REST 의 RestRepository 를 적용하였다.
+
+**himarket 서비스의 order.java**
+```
+package himarket;
+
+import javax.persistence.*;
+import org.springframework.beans.BeanUtils;
+import external.Cancellation;
+import java.util.List;
+
+@Entity
+@Table(name="Order_table")
+public class Order {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+    private String productId;
+    private Integer qty;
+    private String status;
+
+    @PostPersist
+    public void onPostPersist(){
+        final Ordered ordered = new Ordered();
+        BeanUtils.copyProperties(this, ordered);
+        ordered.publishAfterCommit();
+    }
+
+    @PreRemove
+    public void onPreRemove(){
+        final OrderCanceled orderCanceled = new OrderCanceled();
+        BeanUtils.copyProperties(this, orderCanceled);
+        orderCanceled.publishAfterCommit();
+
+        //Following code causes dependency to external APIs
+        // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
+
+        himarket.external.Cancellation cancellation = new himarket.external.Cancellation();
+        // mappings goes here
+        cancellation.setOrderId(this.getId());
+        cancellation.setStatus("DeliveryCancelled");
+
+        OrderApplication.applicationContext.getBean(himarket.external.CancellationService.class)
+            .cancel(cancellation);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(final String productId) {
+        this.productId = productId;
+    }
+
+    public Integer getQty() {
+        return qty;
+    }
+
+    public void setQty(final Integer qty) {
+        this.qty = qty;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(final String status) {
+        this.status = status;
+    }
+}
+```
+
+**himarket 서비스의 PolicyHandler.java**
+```
+package himarket;
+
+import himarket.config.kafka.KafkaProcessor;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Service;
+
+@Service
+public class PolicyHandler{
+    @StreamListener(KafkaProcessor.INPUT)
+    public void onStringEventListener(@Payload final String eventString) {
+
+    }
+
+    @Autowired
+    OrderRepository orderRepository;
+
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverShipped_(@Payload Shipped shipped) {
+
+        if (shipped.isMe()) {
+            java.util.Optional<Order> orderOptioonal = orderRepository.findById(shipped.getOrderId());
+            Order order = orderOptioonal.get();
+            order.setStatus(shipped.getStatus());
+
+            orderRepository.save(order);
+
+            // Order mybeOrder = orderRepository.findById(shipped.getOrderId())
+            // .orElseThrow(java.util.NoSuchElementException::new);
+
+            // mybeOrder.setStatus(shipped.getStatus());
+            // orderRepository.save(mybeOrder);
+
+            //System.out.println("##### listener  : " + shipped.toJson());
+        }
+    }
+
+}
+```
+
+- DDD 적용 후 REST API의 테스트 통하여 정상적으로 동작하는 것을 확인할 수 있었다.
+- 전자제품 주문(order 동작 후 결과)
