@@ -12,3 +12,6 @@
 ### 추가 기능 요구사항
 1. 고객은 주문서비스에서 배송 상태를 열람 할 수 있어야 한다.
 2. 고객센터는 MyPage를 통해 모든 진행내역의 모니터링을 제공해야 한다.
+
+# Event Storming 결과
+![EventStorming](https://user-images.githubusercontent.com/77369319/108143073-597e6780-710a-11eb-9cae-6f2c170848ab.png)
