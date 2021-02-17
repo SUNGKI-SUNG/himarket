@@ -257,6 +257,7 @@ server:
 
 # CQRS
 Materialized View 를 구현하여, 타 마이크로서비스의 데이터 원본에 접근없이(Composite 서비스나 조인SQL 등 없이) 도 내 서비스의 화면 구성과 잦은 조회가 가능하게 구현해 두었다.
+- 주문 실행후 customercenter mypages를 통한 주문내역 확인
 ```
 root@labs-119641427:/home/project# http http://localhost:8083/mypages
 HTTP/1.1 200 
