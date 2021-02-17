@@ -257,3 +257,58 @@ server:
 
 # CQRS
 Materialized View 를 구현하여, 타 마이크로서비스의 데이터 원본에 접근없이(Composite 서비스나 조인SQL 등 없이) 도 내 서비스의 화면 구성과 잦은 조회가 가능하게 구현해 두었다.
+```
+root@labs-119641427:/home/project# http http://localhost:8083/mypages
+HTTP/1.1 200 
+Content-Type: application/hal+json;charset=UTF-8
+Date: Wed, 17 Feb 2021 03:24:55 GMT
+Transfer-Encoding: chunked
+
+{
+    "_embedded": {
+        "mypages": [
+            {
+                "_links": {
+                    "mypage": {
+                        "href": "http://localhost:8083/mypages/1"
+                    }, 
+                    "self": {
+                        "href": "http://localhost:8083/mypages/1"
+                    }
+                }, 
+                "deliveryId": 1, 
+                "orderId": 1, 
+                "productId": "10", 
+                "qty": 1, 
+                "status": "deliveryStarted"
+            }, 
+            {
+                "_links": {
+                    "mypage": {
+                        "href": "http://localhost:8083/mypages/2"
+                    }, 
+                    "self": {
+                        "href": "http://localhost:8083/mypages/2"
+                    }
+                }, 
+                "deliveryId": 2, 
+                "orderId": 2, 
+                "productId": "20", 
+                "qty": 2, 
+                "status": "deliveryStarted"
+            }
+        ]
+    }, 
+    "_links": {
+        "profile": {
+            "href": "http://localhost:8083/profile/mypages"
+        }, 
+        "search": {
+            "href": "http://localhost:8083/mypages/search"
+        }, 
+        "self": {
+            "href": "http://localhost:8083/mypages"
+        }
+    }
+}
+```
