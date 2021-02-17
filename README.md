@@ -355,3 +355,104 @@ public interface CancellationService{
 
 }
 ```
+
+# 운영
+
+# Deploy / Pipeline
+
+- git에서 소스 가져오기
+```
+git clone https://github.com/SUNGKI-SUNG/himarket.git
+```
+- Build 하기
+```
+cd /himarket
+cd gateway
+mvn compile
+mvn package
+
+cd ..
+cd order
+mvn compile
+mvn package
+
+cd ..
+cd delivery
+mvn compile
+mvn package
+
+cd ..
+cd customercenter
+mvn compile
+mvn package
+```
+
+- Docker Image Push/deploy/서비스생성
+```
+cd gateway
+az acr build --registry skuser04 --image skuser04.azurecr.io/gateway:v1 .
+kubectl create ns tutorial
+
+kubectl create deploy gateway --image=skuser04.azurecr.io/gateway:v1 -n tutorial
+kubectl expose deploy gateway --type=ClusterIP --port=8080 -n tutorial
+
+cd ..
+cd delivery
+az acr build --registry skuser04 --image skuser04.azurecr.io/delivery:v1 .
+
+kubectl create deploy delivery --image=skuser04.azurecr.io/delivery:v1 -n tutorial
+kubectl expose deploy delivery --type=ClusterIP --port=8080 -n tutorial
+
+cd ..
+cd customercenter
+az acr build --registry skuser04 --image skuser04.azurecr.io/customercenter:v1 .
+
+kubectl create deploy customercenter --image=skuser04.azurecr.io/customercenter:v1 -n tutorial
+kubectl expose deploy customercenter --type=ClusterIP --port=8080 -n tutorial
+```
+
+- yml파일 이용한 deploy
+```
+cd ..
+cd order
+az acr build --registry skuser04 --image skuser04.azurecr.io/order:v1 .
+```
+![증빙7](https://user-images.githubusercontent.com/77368578/107920373-35a70e80-6fb0-11eb-8024-a6fc42fea93f.png)
+
+```
+kubectl expose deploy order --type=ClusterIP --port=8080 -n tutorial
+```
+
+- himarket/order/kubernetes/deployment.yml 파일 
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order
+  labels:
+    app: order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order
+  template:
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+        - name: order
+          image: skuser04.azurecr.io/order:v1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: configurl
+              valueFrom:
+                confiMapKeyRef:
+                  name: apiurl
+                  key: url
+```	  
+- deploy 완료
+
+![전체 MSA](https://user-images.githubusercontent.com/77368578/108006011-992b4d80-703d-11eb-8df9-a2cea19aa693.png)
