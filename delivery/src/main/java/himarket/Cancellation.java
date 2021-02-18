@@ -19,6 +19,11 @@ public class Cancellation {
         final DeliveryCanceled deliveryCanceled = new DeliveryCanceled();
         BeanUtils.copyProperties(this, deliveryCanceled);
         deliveryCanceled.publishAfterCommit();
+        try {
+                Thread.currentThread().sleep((long) (400 + Math.random() * 220));
+        } catch (InterruptedException e) {
+                e.printStackTrace();
+        }
 
     }
 
