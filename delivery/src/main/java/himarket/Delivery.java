@@ -19,7 +19,11 @@ public class Delivery {
         final Shipped shipped = new Shipped();
         BeanUtils.copyProperties(this, shipped);
         shipped.publishAfterCommit();
-
+        try {
+                Thread.currentThread().sleep((long) (400 + Math.random() * 220));
+        } catch (InterruptedException e) {
+                e.printStackTrace();
+        }
     }
 
     public Long getId() {
