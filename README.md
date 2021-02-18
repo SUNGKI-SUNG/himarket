@@ -347,7 +347,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Date;
 
-@FeignClient(name="delivery", url="${api.url.Payment}")
+@FeignClient(name="delivery", url="${api.url.order}")
 public interface CancellationService{
 
     @RequestMapping(method= RequestMethod.POST, path="/cancellations")
